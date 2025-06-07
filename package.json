@@ -9,7 +9,10 @@
     "build": "npm run copy-html && tsc",
     "start": "npm run build && electron-forge start",
     "package": "npm run build && electron-forge package",
-    "make": "npm run build && electron-forge make"
+    "make": "npm run build && electron-forge make",
+    "dev-server": "tsc -w",
+    "dev-electron": "electron-forge start",
+    "dev": "npm run copy-html && tsc && concurrently \"npm run dev-server\" \"npm run dev-electron\""
   },
   "repository": {
     "type": "git",
@@ -35,6 +38,7 @@
     "@types/node": "^22.15.30",
     "@types/react": "^19.1.6",
     "@types/react-dom": "^19.1.6",
+    "concurrently": "^9.1.2",
     "electron": "^36.4.0",
     "typescript": "^5.8.3"
   },
