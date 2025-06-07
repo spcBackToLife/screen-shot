@@ -40,5 +40,32 @@ module.exports = {
       [FuseV1Options.EnableEmbeddedAsarIntegrityValidation]: true,
       [FuseV1Options.OnlyLoadAppFromAsar]: true,
     }),
+    {
+      name: '@electron-forge/plugin-webpack',
+      config: {
+        mainConfig: undefined, // Rely on Forge's default main process webpack config
+        renderer: {
+          config: undefined, // Rely on Forge's default renderer process webpack config
+          entryPoints: [
+            {
+              html: './index.html',
+              js: './renderer.tsx',
+              name: 'main_window',
+              preload: {
+                js: './preload.ts'
+              }
+            },
+            {
+              html: './selector.html',
+              js: './selectorRenderer.ts',
+              name: 'selector_window',
+              preload: {
+                js: './selectorPreload.ts'
+              }
+            }
+          ]
+        }
+      }
+    }
   ],
 };

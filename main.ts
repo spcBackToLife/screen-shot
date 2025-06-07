@@ -190,7 +190,7 @@ async function initiateScreenshotSelectionProcess(event?: Electron.IpcMainEvent)
       transparent: true,
       alwaysOnTop: true,
       webPreferences: {
-        preload: path.join(__dirname, 'selectorPreload.js'),
+        preload: SELECTOR_WINDOW_PRELOAD_WEBPACK_ENTRY,
         contextIsolation: true,
         nodeIntegration: false,
       },
@@ -199,7 +199,7 @@ async function initiateScreenshotSelectionProcess(event?: Electron.IpcMainEvent)
 
     const backgroundImageDataUrl = fullScreenShotImage!.toDataURL();
     if (selectorWindow) {
-      selectorWindow.loadFile(path.join(__dirname, 'selector.html'));
+      selectorWindow.loadURL(SELECTOR_WINDOW_WEBPACK_ENTRY);
 
       selectorWindow.webContents.on('did-finish-load', () => {
           if (selectorWindow) {
