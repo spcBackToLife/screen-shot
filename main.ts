@@ -10,12 +10,13 @@ function createWindow () {
     width: 800,
     height: 600,
     webPreferences: {
-      preload: path.join(__dirname, 'preload.js')
+      preload: MAIN_WINDOW_PRELOAD_WEBPACK_ENTRY
     }
   });
 
   if (mainWindow) {
-    mainWindow.loadFile('index.html');
+    mainWindow.loadURL(MAIN_WINDOW_WEBPACK_ENTRY);
+    mainWindow.webContents.openDevTools(); // Optional: for debugging
   }
 
   // mainWindow.webContents.openDevTools(); // Optional: for debugging
@@ -134,7 +135,13 @@ let fullScreenShotImage: Electron.NativeImage | null = null;
 async function initiateScreenshotSelectionProcess(event?: Electron.IpcMainEvent) {
   console.log('Initiating screenshot selection process...');
   try {
-    const sources = await desktopCapturer.getSources({ types: ['screen'], fetchWindowIcons: false });
+    const display = require('electron').screen.getPrimaryDisplay();
+    const sources = await desktopCapturer.getSources({
+        types: ['screen'],
+        thumbnailSize: { width: display.size.width * display.scaleFactor, height: display.size.height * display.scaleFactor },
+        fetchWindowIcons: false
+    });
+
     if (sources.length === 0) {
       console.error('No screen sources found for selector.');
       if (event) event.reply('screenshot-captured', null); // Or some error signal
@@ -142,8 +149,24 @@ async function initiateScreenshotSelectionProcess(event?: Electron.IpcMainEvent)
       return;
     }
 
-    const primarySource = sources.find((s: Electron.DesktopCapturerSource) => s.display_id) || sources[0];
-    const display = require('electron').screen.getPrimaryDisplay();
+    // Find the primary display's source. The display_id should match.
+    // Note: On some systems or configurations, display_id might not be straightforwardly available or might be empty.
+    // Falling back to the first source if a perfect match isn't found.
+    let primarySource = sources.find((s: Electron.DesktopCapturerSource) => s.display_id === display.id.toString());
+
+    if (!primarySource) {
+        console.warn(`Could not find screen source with display_id: ${display.id}. Using the first available source.`);
+        primarySource = sources[0];
+    }
+
+    if (!primarySource) { // Double check if sources array was empty or filtering failed
+        console.error('No suitable screen source found after filtering.');
+        if (event) event.reply('screenshot-captured', null);
+        else if (mainWindow) mainWindow.webContents.send('screenshot-captured', null);
+        return;
+    }
+
+    fullScreenShotImage = primarySource.thumbnail;
 
     if (!mainWindow || mainWindow.isDestroyed()) {
       console.error("Main window not available for capture.");
@@ -152,7 +175,6 @@ async function initiateScreenshotSelectionProcess(event?: Electron.IpcMainEvent)
     }
     if (mainWindow.isMinimized()) mainWindow.restore();
     // await new Promise(resolve => setTimeout(resolve, 100)); // e.g., 100ms
-    fullScreenShotImage = await mainWindow.webContents.capturePage();
 
 
     if (mainWindow && !selectorWindow) {
