@@ -1,0 +1,95 @@
+body {
+    font-family: sans-serif;
+    margin: 20px;
+    background-color: #f4f4f4;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+h1 {
+    color: #333;
+}
+
+.controls {
+    margin-bottom: 20px;
+}
+
+#screenshot-button {
+    padding: 10px 15px;
+    font-size: 16px;
+    color: white;
+    background-color: #007bff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+#screenshot-button:hover {
+    background-color: #0056b3;
+}
+
+.screenshot-container {
+    border: 1px solid #ccc;
+    min-height: 200px; /* Min height to be visible before screenshot */
+    max-width: 90vw; /* Max width to not overflow viewport */
+    display: flex; /* To center the image if it's smaller */
+    justify-content: center;
+    align-items: center;
+    background-color: #fff;
+}
+
+#screenshot-image {
+    max-width: 100%; /* Ensure image is responsive and stays within container */
+    max-height: 70vh; /* Max height to not overflow viewport */
+    display: block; /* Remove extra space below image */
+}
+
+/* ... existing styles ... */
+
+.screenshot-container {
+    position: relative; /* Needed for absolute positioning of the canvas */
+    border: 1px solid #ccc;
+    min-height: 200px;
+    max-width: 90vw;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #fff;
+    overflow: hidden; /* Ensure canvas doesn't make container larger if image is smaller */
+}
+
+#screenshot-image {
+    max-width: 100%;
+    max-height: 70vh;
+    display: block;
+}
+
+#annotation-canvas {
+    position: absolute;
+    top: 0;
+    left: 0;
+    /* Dimensions will be set by JS to match the image */
+    cursor: crosshair; /* Default cursor for drawing area */
+}
+
+/* Style for tool buttons (optional, can reuse existing button style or add new) */
+.controls button { /* General style for all control buttons for consistency */
+    padding: 10px 15px;
+    font-size: 14px; /* Slightly smaller for more buttons */
+    color: white;
+    background-color: #007bff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    margin: 5px; /* Add some margin between buttons */
+}
+
+.controls button:hover {
+    background-color: #0056b3;
+}
+
+.controls button.active { /* Style for active tool */
+    background-color: #0056b3;
+    box-shadow: inset 0 0 5px rgba(0,0,0,0.3);
+}

@@ -1,0 +1,23 @@
+{
+  "name": "app",
+  "version": "1.0.0",
+  "description": "桌面截图应用",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/spcBackToLife/screen-shot.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/spcBackToLife/screen-shot/issues"
+  },
+  "homepage": "https://github.com/spcBackToLife/screen-shot#readme",
+  "devDependencies": {
+    "electron": "^36.4.0"
+  }
+}

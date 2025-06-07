@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Electron Screenshot App</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <h1>Screen Capture</h1>
+
+    <div class="controls">
+        <button id="screenshot-button">Take Screenshot</button>
+        <button id="pin-button">Pin Window</button>
+        <button id="save-button">Save Screenshot</button>
+        <button id="draw-rect-button">Draw Rectangle</button>
+        <button id="draw-circle-button">Draw Circle</button>
+        <button id="text-tool-button">Add Text</button>
+        <button id="pixelate-tool-button">Pixelate Area</button> <!-- New button -->
+        <button id="clear-annotations-button">Clear Annotations</button>
+    </div>
+
+    <div class="screenshot-container">
+        <img id="screenshot-image" alt="Screenshot will appear here">
+        <canvas id="annotation-canvas"></canvas>
+    </div>
+
+    <script src="./renderer.js"></script>
+</body>
+</html>
