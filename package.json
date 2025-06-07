@@ -2,17 +2,17 @@
   "name": "app",
   "version": "1.0.0",
   "description": "桌面截图应用",
-  "main": "dist/main.js",
+  "main": ".webpack/main/index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "copy-html": "cp *.html dist/ || echo \"No HTML files to copy at root\"",
     "build": "npm run copy-html && tsc",
-    "start": "npm run build && electron-forge start",
+    "start": "electron-forge start",
     "package": "npm run build && electron-forge package",
     "make": "npm run build && electron-forge make",
     "dev-server": "tsc -w",
     "dev-electron": "electron-forge start",
-    "dev": "npm run copy-html && tsc && concurrently \"npm run dev-server\" \"npm run dev-electron\""
+    "dev": "electron-forge start"
   },
   "repository": {
     "type": "git",
