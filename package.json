@@ -2,12 +2,14 @@
   "name": "app",
   "version": "1.0.0",
   "description": "桌面截图应用",
-  "main": "index.js",
+  "main": "dist/main.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "electron-forge start",
-    "package": "electron-forge package",
-    "make": "electron-forge make"
+    "copy-html": "cp *.html dist/ || echo \"No HTML files to copy at root\"",
+    "build": "npm run copy-html && tsc",
+    "start": "npm run build && electron-forge start",
+    "package": "npm run build && electron-forge package",
+    "make": "npm run build && electron-forge make"
   },
   "repository": {
     "type": "git",
@@ -29,7 +31,12 @@
     "@electron-forge/plugin-auto-unpack-natives": "^7.8.1",
     "@electron-forge/plugin-fuses": "^7.8.1",
     "@electron/fuses": "^1.8.0",
-    "electron": "^36.4.0"
+    "@types/electron": "^1.6.12",
+    "@types/node": "^22.15.30",
+    "@types/react": "^19.1.6",
+    "@types/react-dom": "^19.1.6",
+    "electron": "^36.4.0",
+    "typescript": "^5.8.3"
   },
   "dependencies": {
     "electron-squirrel-startup": "^1.0.1"

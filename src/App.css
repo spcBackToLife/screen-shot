@@ -1,0 +1,36 @@
+.App {
+  text-align: center;
+}
+
+.App-header {
+  background-color: #282c34;
+  padding: 10px;
+  color: white;
+  margin-bottom: 20px;
+}
+
+.controls {
+  margin-bottom: 20px;
+}
+.controls button, .controls input {
+  margin: 0 5px;
+  padding: 8px 12px;
+  font-size: 14px;
+}
+.controls button.active {
+  background-color: #007bff;
+  color: white;
+}
+
+.screenshot-container {
+  border: 1px solid #ccc;
+  min-height: 200px;
+  max-width: 90vw; /* Max width to not overflow viewport */
+  margin: 0 auto; /* Center the container */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #fff;
+  position: relative; /* For canvas positioning */
+   overflow: hidden; /* Ensure canvas doesn't make container larger if image is smaller */
+}
